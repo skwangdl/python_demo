@@ -20,9 +20,18 @@ def demo_for(flag):
         print(i)
 
 def demo_break(flag):
+    while True:
+        s = 'quit'
+        if s == 'quit':
+            break;
+        print('quit')
 
-
+def demo_break(flag):
+    demo_if(1)
+    demo_for(1)
+    demo_break('quit')
     demo_while(1)
+
 if __name__ == '__main__':
     demo_if(1)
     demo_for(5)
