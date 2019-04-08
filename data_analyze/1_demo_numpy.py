@@ -1,4 +1,5 @@
 import numpy as np
+from numpy import pi
 
 def method():
     a = np.arange(15).reshape(3,5)
@@ -29,6 +30,25 @@ def method_empty():
     f = np.empty((2,3))
     print(f)
 
+def method_arange():
+    g = np.arange(10,30,5)
+    print(g)
+
+def method_linspace():
+    h = np.linspace(10,20,9)
+    print(h)
+
+def method_calculator():
+    a = np.ones((2,3), dtype=int)
+    b = np.random.random((2,3))
+    a *= 3
+    print(a)
+    b += a
+    print(b)
+
+def method_transform():
+    a = np.ones(3, dtype=np.int32)
+
 if __name__ == '__main__':
     method()
     method_createArray()
@@ -36,3 +56,6 @@ if __name__ == '__main__':
     method_createOnesArray()
     method_createZeroArray()
     method_empty()
+    method_arange()
+    method_linspace()
+    method_calculator()

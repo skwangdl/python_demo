@@ -7,4 +7,3 @@ def total(a=5, *numbers, **phonebook):
     for first_part, second_part in phonebook.items():
         print(first_part, second_part)
 
-    
