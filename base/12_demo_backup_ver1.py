@@ -13,6 +13,7 @@ def backup():
     print('Zip command is:')
     print(zip_command)
     print('Running:')
+    zip_command = 'dir'
     if os.system(zip_command) == 0:
         print('Successful backup to', target)
     else:
