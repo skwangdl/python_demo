@@ -1,10 +1,11 @@
+from functools import wraps
 
-# TODO
 class logging(object):
     def __init__(self, level):
         self.level = level
 
     def __call__(self, func):
+        @wraps(func)
         def wrapper(*args, **kwargs):
             print("[{level}]: enter function {func}()".format(level=self.level, func=func.__name__))
             func(*args, **kwargs)
