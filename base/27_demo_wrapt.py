@@ -7,8 +7,8 @@ def logging(level):
         return wrapped(*args, **kwargs)
     return wrapper
 
-@logging(level='DEBUG'
-def say_hello():)
+@logging(level='DEBUG')
+def say_hello():
     print("hello kepler")
 
 if __name__ == '__main__':
