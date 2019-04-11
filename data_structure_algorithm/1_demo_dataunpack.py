@@ -1,5 +1,6 @@
 import numpy as np
 
+# 现在有一个包含N个元素的元组或者是序列，怎样将它里面的值解压后同时赋值给N个变量
 def demo_unpack():
     data = ['ACE', 50, 91.1, (2019, 1, 2)]
     a, b, c, d = data

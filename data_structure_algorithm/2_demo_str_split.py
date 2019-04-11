@@ -1,4 +1,5 @@
 
+# 如果一个可迭代对象的元素个数超过变量个数时会抛出一个ValueError。那么怎样才能从这个可迭代对象中解压出N个元素出来
 def demo_str_split():
     line = 'a:c,d,e,f,g:faf'
     str1, *str2, str3 = line.split(':')
