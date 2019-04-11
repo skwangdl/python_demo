@@ -14,5 +14,5 @@ def sum(items):
 
 if __name__ == '__main__':
     demo_str_split()
-    items = [1,10,4,7,2,3]
+    items = [20, 20, 16, 16, 21, 13, 12, 25, 25, 15, 13, 14, 15, 14, 21]
     print(sum(items))
