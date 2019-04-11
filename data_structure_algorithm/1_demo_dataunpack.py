@@ -11,12 +11,11 @@ def demo_unpack():
     e,f,g,h,i,j = str
     print('{} {} {} {} {} {}'.format(e,f,g,h,i,j))
 
-def drop_first_last(grades):
+def drop_first_last():
+    grades = (100,2,3,4,5,6,80)
     first, *middle, last = grades
-    return np.mean(middle)
+    print(np.mean(middle))
 
 if __name__ == '__main__':
     demo_unpack()
-    gradles = (100,2,3,4,5,6,80)
-    avg = drop_first_last(grades=gradles)
-    print(avg)
+    drop_first_last()
