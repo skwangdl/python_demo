@@ -22,6 +22,18 @@ def np_where_demo():
     print(out)
     print(arr)
 
+def np_stack_demo():
+    a = np.arange(10).reshape(2, -1)
+    b = np.repeat(1,10).reshape(2, -1)
+    c = np.vstack([a,b])
+    print(c)
+    d = np.hstack([a,b])
+    print(d)
+
+def np_create_fix_array():
+    arr = np.array([1,2,3])
+    a = np.hstack([np.repeat(arr, 3), np.tile(arr, 3)])
+    print(a)
 
 if __name__ == '__main__':
     print_version()
@@ -29,3 +41,5 @@ if __name__ == '__main__':
     create_array_all_true()
     get_odd_number()
     np_where_demo()
+    np_stack_demo()
+    np_create_fix_array()
