@@ -1,4 +1,5 @@
 import numpy as np
+from itertools import chain
 from numpy import pi
 
 def method():
@@ -49,6 +50,34 @@ def method_calculator():
 def method_transform():
     a = np.ones(3, dtype=np.int32)
 
+def sum_by_axis():
+    b = np.arange(12).reshape(3,4)
+    c = b.sum(axis=0)
+    print(c)
+
+def method_dot():
+    a = [[1,2], [3,4]]
+    b = [[5,6], [7,8]]
+    c = np.dot(a, b)
+    print(c)
+
+def iterator_numpy():
+    b = [[1,2],[3,4]]
+    for row in b:
+        print(row)
+    c = np.arange(4).reshape(2,2)
+    print(c)
+    for i in c.flat:
+        print(i)
+
+def demo_stack():
+    a = [[1,2], [3,4]]
+    b = [[5,6], [7,8]]
+    c = np.vstack((a,b))
+    d = np.hstack((a,b))
+    print(c)
+    print(d)
+
 if __name__ == '__main__':
     method()
     method_createArray()
@@ -59,3 +88,7 @@ if __name__ == '__main__':
     method_arange()
     method_linspace()
     method_calculator()
+    method_dot()
+    sum_by_axis()
+    iterator_numpy()
+    demo_stack()
