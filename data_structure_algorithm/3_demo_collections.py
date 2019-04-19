@@ -10,7 +10,7 @@ def search(lines, pattern, history=5):
 
 if __name__ == '__main__':
     with open(r'D:\\Temp\\pome.txt') as f:
-        for line, prevlines in search(f, 'python', 5):
+        for line, prevlines in search(f, 'kepler', 5):
             for pline in prevlines:
                 print(pline, end='')
             print(line, end='')

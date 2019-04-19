@@ -35,6 +35,34 @@ def np_create_fix_array():
     a = np.hstack([np.repeat(arr, 3), np.tile(arr, 3)])
     print(a)
 
+def array_intercection():
+    a = np.array([1,2,3])
+    b = np.array([2,3,4])
+    c = np.intersect1d(a,b)
+    print(c)
+
+def get_index_in_two_array():
+    a = np.array([1,2,3,4,5])
+    b = np.array([0,2,0,4,5])
+    c = np.where(a == b)
+    print(c)
+
+def get_set_value_range():
+    a = np.array([2,6,5,8,9,3,1])
+    index = np.where((a>= 5) & (a <=8))
+    b = a[index]
+    print(b)
+
+def change_column_position():
+    arr = np.array(([1,2,3],[4,5,6],[7,8,9]))
+    a = arr[:, [1,0,2]]
+    print(a)
+
+def change_row_position():
+    arr = np.array(([1,2,3],[4,5,6],[7,8,9]))
+    a = arr[[1,0,2], :]
+    print(a)
+
 if __name__ == '__main__':
     print_version()
     create_array()
@@ -43,3 +71,8 @@ if __name__ == '__main__':
     np_where_demo()
     np_stack_demo()
     np_create_fix_array()
+    array_intercection()
+    get_index_in_two_array()
+    get_set_value_range()
+    change_column_position()
+    change_row_position()
