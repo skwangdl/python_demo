@@ -63,6 +63,43 @@ def change_row_position():
     a = arr[[1,0,2], :]
     print(a)
 
+# 反转二维数组的行
+def reverse_2darray_row():
+    arr = np.arange(9).reshape(3,3)
+    print(arr)
+    print(arr[::-1])
+
+# 反转二维数组的列
+def reverse_2darray_column():
+    arr = np.arange(9).reshape(3,3)
+    print(arr)
+    print(arr[:,::-1])
+
+# 创建包含5到10之间随机浮点数的二维数组
+def create_float_arrray_with_range():
+    rand_arr = np.random.randint(low=5, high=10, size=(5,3)) + np.random.random((5,3))
+    print(rand_arr)
+    rand_arr = np.random.uniform(5,10,size=(5,3))
+    print(rand_arr)
+
+def get_data_from_url():
+    url = 'https://archive.ics.uci.edu/ml/machine-learning-databases/iris/iris.data'
+    iris = np.genfromtxt(url, delimiter=',', dtype='object')
+    names = ('sepallength', 'sepalwidth', 'petallength', 'petalwidth', 'species')
+    print(iris[:3])
+
+def transfer_1darray_to_2darray():
+    url = 'https://archive.ics.uci.edu/ml/machine-learning-databases/iris/iris.data'
+    iris_2d = np.genfromtxt(url, delimiter=',', dtype='float', usecols=[0,1,2,3])
+    print(iris_2d[:4])
+
+# calculator data about numpy math by devision
+def calculator_data_about_math_devision():
+    url = 'https://archive.ics.uci.edu/ml/machine-learning-databases/iris/iris.data'
+    sepallength = np.genfromtxt(url, delimiter=',', dtype='float', usecols=[0])
+    mean, med, std = np.mean(sepallength), np.median(sepallength), np.std(sepallength)
+    print('{} {} {}'.format(mean, med, std))
+
 if __name__ == '__main__':
     print_version()
     create_array()
@@ -76,3 +113,9 @@ if __name__ == '__main__':
     get_set_value_range()
     change_column_position()
     change_row_position()
+    reverse_2darray_row()
+    reverse_2darray_column()
+    create_float_arrray_with_range()
+    get_data_from_url()
+    transfer_1darray_to_2darray()
+    calculator_data_about_math_devision()

@@ -1,7 +1,9 @@
 import numpy as np
 
-def demo():
+# demo about softmax
+#
+def demo_softmax():
     print()
 
 if __name__ == '__main__':
-    demo()
+    demo_softmax()
