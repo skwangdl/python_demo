@@ -93,13 +93,6 @@ def transfer_1darray_to_2darray():
     iris_2d = np.genfromtxt(url, delimiter=',', dtype='float', usecols=[0,1,2,3])
     print(iris_2d[:4])
 
-# calculator data about numpy math by devision
-def calculator_data_about_math_devision():
-    url = 'https://archive.ics.uci.edu/ml/machine-learning-databases/iris/iris.data'
-    sepallength = np.genfromtxt(url, delimiter=',', dtype='float', usecols=[0])
-    mean, med, std = np.mean(sepallength), np.median(sepallength), np.std(sepallength)
-    print('{} {} {}'.format(mean, med, std))
-
 if __name__ == '__main__':
     print_version()
     create_array()
@@ -118,4 +111,3 @@ if __name__ == '__main__':
     create_float_arrray_with_range()
     get_data_from_url()
     transfer_1darray_to_2darray()
-    calculator_data_about_math_devision()
