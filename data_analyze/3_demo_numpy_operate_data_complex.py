@@ -65,11 +65,26 @@ def group_num():
     petal_length_cat = [label_map[x] for x in petal_length_bin]
     print(petal_length_cat[:4])
 
-# 概率抽样
+# 概率抽样,一种样本抽中的概率是另外两种样本的和
 def get_data_by_probability():
     url = 'https://archive.ics.uci.edu/ml/machine-learning-databases/iris/iris.data'
     iris = np.genfromtxt(url, delimiter=',', dtype='object')
-    
+    np.random.seed(100)
+    a = np.array(['Iris-setosa', 'Iris-versicolor', 'Iris-virginica'])
+    species_out = np.random.choice(a, 150, p=[0.5, 0.25, 0.25])
+    print(species_out)
+
+# 找出数字的分组均值
+def get_average_group():
+    url = 'https://archive.ics.uci.edu/ml/machine-learning-databases/iris/iris.data'
+    iris = np.genfromtxt(url, delimiter=',', dtype='object')
+    names = ('sepallength', 'sepalwidth', 'petallength', 'petalwidth', 'species')
+    numeric_column = iris[:,1].astype('float')
+    grouping_column = iris[:,4]
+    output = []
+    for group_val in np.unique(grouping_column):
+        output.append([group_val, numeric_column[grouping_column==group_val].mean()])
+    print(output)
 
 if __name__ == '__main__':
     demo_softmax()
@@ -79,3 +94,5 @@ if __name__ == '__main__':
     get_any_nan()
     calculator_data_about_math_devision()
     group_num()
+    get_data_by_probability()
+    get_average_group()
