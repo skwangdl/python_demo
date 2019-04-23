@@ -50,9 +50,9 @@ def demo_dateFrame_get_value_by_section():
 
 
 if __name__ == '__main__':
-    # demo_series()
-    # demo_dateFrame()
-    # demo_dateFrame_with_map()
-    # demo_dateFrame_sort_by_axis()
-    # demo_dateFrame_get_value()
+    demo_series()
+    demo_dateFrame()
+    demo_dateFrame_with_map()
+    demo_dateFrame_sort_by_axis()
+    demo_dateFrame_get_value()
     demo_dateFrame_get_value_by_section()
