@@ -48,10 +48,17 @@ def append_drop_dateframe():
     df = df.drop(0)
     print(df)
 
+def demo_sort():
+    dates = pd.date_range('20190101', periods=6)
+    df = pd.DataFrame(np.random.randn(6,4), index=dates, columns=list('ABCD'))
+    print(df.sort_index(axis=1, ascending=False))
+    print(df.sort_values(by='B'))
+
 if __name__ == '__main__':
     # get_value()
     # get_value_quick()
     # get_value_by_index()
     # filter_with_isin()
     # add_delete_column_to_dateframe()
-    append_drop_dateframe()
+    # append_drop_dateframe()
+    demo_sort()
