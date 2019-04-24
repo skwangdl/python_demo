@@ -1,4 +1,3 @@
-import numpy as np
 import pandas as pd
 
 def demo_pandas_io():
