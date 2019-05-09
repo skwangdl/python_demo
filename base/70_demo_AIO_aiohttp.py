@@ -16,7 +16,6 @@ async def wshandle(request):
             await ws.send_bytes(msg.data)
         elif msg.type == web.WSMsgType.close:
             break
-
     return ws
 
 app = web.Application()
