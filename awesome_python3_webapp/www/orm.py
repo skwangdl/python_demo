@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
+from boto.compat import StandardError
 
-__author__ = 'Michael Liao'
+__author__ = 'Kepler Wang'
 
 import asyncio, logging
 

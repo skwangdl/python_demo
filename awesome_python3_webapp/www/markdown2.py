@@ -94,10 +94,7 @@ import sys
 from pprint import pprint, pformat
 import re
 import logging
-try:
-    from hashlib import md5
-except ImportError:
-    from md5 import md5
+from hashlib import md5
 import optparse
 from random import random, randint
 import codecs
@@ -123,7 +120,6 @@ if sys.version_info[0] <= 2:
         bytes
     except NameError:
         bytes = str
-    base_string_type = basestring
 elif sys.version_info[0] >= 3:
     py3 = True
     unicode = str
@@ -1081,14 +1077,6 @@ class Markdown(object):
               \2
             )?                  # title is optional
           \)$
-        ''', re.X | re.S)
-    _tail_of_reference_link_re = re.compile(r'''
-          # Match tail of: [text][id]
-          [ ]?          # one optional space
-          (?:\n[ ]*)?   # one optional newline followed by spaces
-          \[
-            (?P<id>.*?)
-          \]
         ''', re.X | re.S)
 
     _whitespace = re.compile(r'\s*')
@@ -2427,9 +2415,6 @@ def main(argv=None):
             test_dir = join(dirname(dirname(abspath(__file__))), "test")
             if exists(join(test_dir, "test_markdown2.py")):
                 sys.path.insert(0, test_dir)
-                from test_markdown2 import norm_html_from_html
-                norm_html = norm_html_from_html(html)
-                norm_perl_html = norm_html_from_html(perl_html)
             else:
                 norm_html = html
                 norm_perl_html = perl_html

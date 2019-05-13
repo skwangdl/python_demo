@@ -5,15 +5,15 @@
 Default configurations.
 '''
 
-__author__ = 'Michael Liao'
+__author__ = 'Kepler Wang'
 
 configs = {
     'debug': True,
     'db': {
         'host': '127.0.0.1',
         'port': 3306,
-        'user': 'www',
-        'password': 'www',
+        'user': 'root',
+        'password': 'kepler',
         'db': 'awesome'
     },
     'session': {
