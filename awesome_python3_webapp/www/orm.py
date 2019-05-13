@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-from boto.compat import StandardError
 
 __author__ = 'Michael Liao'
 
@@ -28,33 +27,37 @@ def create_pool(loop, **kw):
         loop=loop
     )
 
-async def select(sql, args, size=None):
+@asyncio.coroutine
+def select(sql, args, size=None):
     log(sql, args)
     global __pool
-    async with __pool.get() as conn:
-        async with conn.cursor(aiomysql.DictCursor) as cur:
-            await cur.execute(sql.replace('?', '%s'), args or ())
-            if size:
-                rs = await cur.fetchmany(size)
-            else:
-                rs = await cur.fetchall()
+    with (yield from __pool) as conn:
+        cur = yield from conn.cursor(aiomysql.DictCursor)
+        yield from cur.execute(sql.replace('?', '%s'), args or ())
+        if size:
+            rs = yield from cur.fetchmany(size)
+        else:
+            rs = yield from cur.fetchall()
+        yield from cur.close()
         logging.info('rows returned: %s' % len(rs))
         return rs
 
-async def execute(sql, args, autocommit=True):
+@asyncio.coroutine
+def execute(sql, args, autocommit=True):
     log(sql)
-    async with __pool.get() as conn:
+    with (yield from __pool) as conn:
         if not autocommit:
-            await conn.begin()
+            yield from conn.begin()
         try:
-            async with conn.cursor(aiomysql.DictCursor) as cur:
-                await cur.execute(sql.replace('?', '%s'), args)
-                affected = cur.rowcount
+            cur = yield from conn.cursor()
+            yield from cur.execute(sql.replace('?', '%s'), args)
+            affected = cur.rowcount
+            yield from cur.close()
             if not autocommit:
-                await conn.commit()
+                yield from conn.commit()
         except BaseException as e:
             if not autocommit:
-                await conn.rollback()
+                yield from conn.rollback()
             raise
         return affected
 
@@ -219,7 +222,7 @@ class Model(dict, metaclass=ModelMetaclass):
         args.append(self.getValueOrDefault(self.__primary_key__))
         rows = yield from execute(self.__insert__, args)
         if rows != 1:
-            logging.error('failed to insert record: affected rows: %s' % rows)
+            logging.warn('failed to insert record: affected rows: %s' % rows)
 
     @asyncio.coroutine
     def update(self):
@@ -227,7 +230,7 @@ class Model(dict, metaclass=ModelMetaclass):
         args.append(self.getValue(self.__primary_key__))
         rows = yield from execute(self.__update__, args)
         if rows != 1:
-            logging.error('failed to update by primary key: affected rows: %s' % rows)
+            logging.warn('failed to update by primary key: affected rows: %s' % rows)
 
     @asyncio.coroutine
     def remove(self):
