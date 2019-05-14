@@ -2,6 +2,8 @@
 # -*- coding: utf-8 -*-
 
 __author__ = 'Kepler Wang'
+# 辅助程序，让pymonitor.py脚本启动,使用watchdog observers 循环监控www目录下的代码改动，如有改动，先把当前进程kill，
+# 在重启，完成服务器进程的重启
 
 import os, sys, time, subprocess
 
@@ -59,7 +61,7 @@ def start_watch(path, callback):
 if __name__ == '__main__':
     argv = sys.argv[1:]
     if not argv:
-        print('Usage: ./pymonitor your-script.py')
+        print('Usage: ./pymonitor app.py')
         exit(0)
     if argv[0] != 'python3':
         argv.insert(0, 'python3')

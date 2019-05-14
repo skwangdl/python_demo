@@ -34,6 +34,7 @@ def get_page_index(page_str):
         p = 1
     return p
 
+#  方法作用为计算加密cookie
 def user2cookie(user, max_age):
     '''
     Generate cookie str by user.
@@ -48,6 +49,9 @@ def text2html(text):
     lines = map(lambda s: '<p>%s</p>' % s.replace('&', '&amp;').replace('<', '&lt;').replace('>', '&gt;'), filter(lambda s: s.strip() != '', text.split('\n')))
     return ''.join(lines)
 
+# 由于HTTP协议是一种无状态协议，server要跟踪用户状态，只能通过cookie
+# Session简单易用，可以直接从Session中取出用户信息，但是如果是集群，需要在内存中维护一个映射表来存储登录用户的信息，使用Session的Web App很难扩展
+# 使用cookie的话需要考虑防伪造，使用SHA1进行防伪
 @asyncio.coroutine
 def cookie2user(cookie_str):
     '''
@@ -116,6 +120,7 @@ def signin():
         '__template__': 'signin.html'
     }
 
+# 登录验证API
 @post('/api/authenticate')
 def authenticate(*, email, passwd):
     if not email:
