@@ -75,6 +75,7 @@ def cookie2user(cookie_str):
         logging.exception(e)
         return None
 
+# API接口，__template__ 配置html模板
 @get('/')
 def index(*, page='1'):
     page_index = get_page_index(page)

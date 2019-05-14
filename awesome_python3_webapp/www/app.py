@@ -137,10 +137,14 @@ def datetime_filter(t):
 def init(loop):
     # 异步获取连接池， 读取config.py configs配置
     yield from orm.create_pool(loop=loop, **configs.db)
+    # 加入middlewares，是一种拦截器，一个URL在被某个函数处理前，可以经过一系列的middlewares的处理
+    # 一个middleware可以改变URL的输入，输出，甚至可以决定不继续处理而直接返回
+    # middleware的用处就在于把通用的功能从每个URL处理函数中拿出来，集中放在一个地方处理，例如日志处理
     app = web.Application(loop=loop, middlewares=[
         logger_factory, auth_factory, response_factory
     ])
     init_jinja2(app, filters=dict(datetime=datetime_filter))
+    # 自动把handler模块的所有符合条件的函数注册了
     add_routes(app, 'handlers')
     add_static(app)
     # 异步创建服务器

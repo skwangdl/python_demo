@@ -11,6 +11,7 @@ from aiohttp import web
 
 from apis import APIError
 
+# 通过定义装饰器，附加URL信息 method type(get post), path
 def get(path):
     '''
     Define decorator @get('/path')
@@ -77,6 +78,9 @@ def has_request_arg(fn):
             raise ValueError('request parameter must be the last named parameter in function: %s%s' % (fn.__name__, str(sig)))
     return found
 
+# RequestHandler类，定义了__call__()方法，因此可以将其实例视为函数
+# RequestHandler类的目的就是从URL函数中分析其需要接受的参数，从request中获取必要的参数，
+# 调用URL函数，然后把结果转换为web.Response对象，这样就完全符合aiohttp框架的要求
 class RequestHandler(object):
 
     def __init__(self, app, fn):
@@ -146,6 +150,7 @@ def add_static(app):
     app.router.add_static('/static/', path)
     logging.info('add static %s => %s' % ('/static/', path))
 
+# 注册一个URL处理函数
 def add_route(app, fn):
     method = getattr(fn, '__method__', None)
     path = getattr(fn, '__route__', None)
