@@ -27,6 +27,7 @@ class Dict(dict):
     def __setattr__(self, key, value):
         self[key] = value
 
+# 结合config_default.py, config_override.py关于DB配置的dict，结合成一个Dict类
 def merge(defaults, override):
     r = {}
     for k, v in defaults.items():
@@ -39,6 +40,7 @@ def merge(defaults, override):
             r[k] = v
     return r
 
+# 转换为dict方法
 def toDict(d):
     D = Dict()
     for k, v in d.items():
@@ -47,6 +49,8 @@ def toDict(d):
 
 configs = config_default.configs
 
+# 读取config_default.py, config_override.py内的连接DB配置
+# 两个配置信息结合成一个dict
 try:
     import config_override
     configs = merge(configs, config_override.configs)

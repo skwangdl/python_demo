@@ -8,18 +8,13 @@ async web application.
 '''
 
 import logging; logging.basicConfig(level=logging.INFO)
-
 import asyncio, os, json, time
 from datetime import datetime
-
 from aiohttp import web
 from jinja2 import Environment, FileSystemLoader
-
 from config import configs
-
 import orm
 from coroweb import add_routes, add_static
-
 from handlers import cookie2user, COOKIE_NAME
 
 def init_jinja2(app, **kw):
@@ -137,8 +132,10 @@ def datetime_filter(t):
     dt = datetime.fromtimestamp(t)
     return u'%s年%s月%s日' % (dt.year, dt.month, dt.day)
 
+# 主循环，启动异步服务
 @asyncio.coroutine
 def init(loop):
+    # 异步获取连接池， 读取config.py configs配置
     yield from orm.create_pool(loop=loop, **configs.db)
     app = web.Application(loop=loop, middlewares=[
         logger_factory, auth_factory, response_factory
@@ -146,10 +143,15 @@ def init(loop):
     init_jinja2(app, filters=dict(datetime=datetime_filter))
     add_routes(app, 'handlers')
     add_static(app)
+    # 异步创建服务器
     srv = yield from loop.create_server(app.make_handler(), '127.0.0.1', 9000)
     logging.info('server started at http://127.0.0.1:9000...')
     return srv
 
-loop = asyncio.get_event_loop()
-loop.run_until_complete(init(loop))
-loop.run_forever()
+# 这是基于协程的异步模型，在协程中，不能调用普通的同步IO操作，因为所有用户
+# 都是由一个线程服务的，协程的执行速度必须非常快，才能处理大量用户的请求。
+# 一旦决定使用异步，则系统每一层都必须是异步
+if __name__ == '__main__':
+    loop = asyncio.get_event_loop()
+    loop.run_until_complete(init(loop))
+    loop.run_forever()

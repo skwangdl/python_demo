@@ -11,11 +11,13 @@ import aiomysql
 def log(sql, args=()):
     logging.info('SQL: %s' % sql)
 
+# 创建连接池方法
 @asyncio.coroutine
 def create_pool(loop, **kw):
     logging.info('create database connection pool...')
     global __pool
     __pool = yield from aiomysql.create_pool(
+        # 获取DB连接信息，设定默认值
         host=kw.get('host', 'localhost'),
         port=kw.get('port', 3306),
         user=kw['user'],
@@ -28,6 +30,7 @@ def create_pool(loop, **kw):
         loop=loop
     )
 
+# 执行select方法，异步获取pool
 @asyncio.coroutine
 def select(sql, args, size=None):
     log(sql, args)
@@ -36,6 +39,7 @@ def select(sql, args, size=None):
         cur = yield from conn.cursor(aiomysql.DictCursor)
         yield from cur.execute(sql.replace('?', '%s'), args or ())
         if size:
+            # fetchmany获取最多指定数量的记录
             rs = yield from cur.fetchmany(size)
         else:
             rs = yield from cur.fetchall()
@@ -43,6 +47,7 @@ def select(sql, args, size=None):
         logging.info('rows returned: %s' % len(rs))
         return rs
 
+# 执行 update, insert, delete方法，异步获取连接DB connect对象
 @asyncio.coroutine
 def execute(sql, args, autocommit=True):
     log(sql)
@@ -51,6 +56,7 @@ def execute(sql, args, autocommit=True):
             yield from conn.begin()
         try:
             cur = yield from conn.cursor()
+            # 使用 ？ 占位，防止sql注入
             yield from cur.execute(sql.replace('?', '%s'), args)
             affected = cur.rowcount
             yield from cur.close()
@@ -105,12 +111,15 @@ class TextField(Field):
         super().__init__(name, 'text', False, default)
 
 class ModelMetaclass(type):
-
+    # 任何继承自Model类的子类(models.py内的类)，会自动通过ModelMetaclass扫描映射关系，并存储到自身的类属性，如__table__, __mappings__中
     def __new__(cls, name, bases, attrs):
+        # 排除Model类本身
         if name=='Model':
             return type.__new__(cls, name, bases, attrs)
+        # 获取当前类要映射的table名称
         tableName = attrs.get('__table__', None) or name
         logging.info('found model: %s (table: %s)' % (name, tableName))
+        # 获取所有的Field和主键名
         mappings = dict()
         fields = []
         primaryKey = None
@@ -140,6 +149,7 @@ class ModelMetaclass(type):
         attrs['__delete__'] = 'delete from `%s` where `%s`=?' % (tableName, primaryKey)
         return type.__new__(cls, name, bases, attrs)
 
+# 所有ORM映射的基类, 使用ModelMetaclass确定当此类创建时，读取具体子类的映射信息
 class Model(dict, metaclass=ModelMetaclass):
 
     def __init__(self, **kw):
@@ -167,6 +177,7 @@ class Model(dict, metaclass=ModelMetaclass):
                 setattr(self, key, value)
         return value
 
+    # Model类方法，定义子类的CRUD
     @classmethod
     @asyncio.coroutine
     def findAll(cls, where=None, args=None, **kw):

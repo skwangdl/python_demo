@@ -16,7 +16,8 @@ def next_id():
 
 class User(Model):
     __table__ = 'users'
-
+    # __table__, id, email... 是类User的属性，不是该类的实例的属性，在类级别定义的属性
+    # 用来描述User对象的表的映射关系，而实例属性必须通过__init__()方法初始化
     id = StringField(primary_key=True, default=next_id, ddl='varchar(50)')
     email = StringField(ddl='varchar(50)')
     passwd = StringField(ddl='varchar(50)')
