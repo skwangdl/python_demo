@@ -31,6 +31,9 @@ def demo_pad_fill_back_fill():
     print(df.fillna(method='pad'))
     print(df.fillna(method='bfill'))
 
+def demo_dropna():
+    print()
+
 if __name__ == '__main__':
     # demo_isnull_notnull_calculator()
     # demo_all_nan()
