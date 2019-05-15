@@ -24,18 +24,22 @@ def demo_fillna():
     print(df)
     print(df.fillna(0))
 
-def demo_pad_fill_back_fill():
+def demo_pad_fill_back_fill_dropna():
     df = pd.DataFrame(np.random.randn(5, 3), index=['a', 'c', 'e', 'f', 'g'], columns=['one', 'two', 'three'])
     df = df.reindex(['a', 'b', 'c', 'd', 'e', 'f', 'g'])
     print(df)
     print(df.fillna(method='pad'))
     print(df.fillna(method='bfill'))
+    print(df.dropna())
 
-def demo_dropna():
-    print()
+def demo_replace():
+    df = pd.DataFrame({'one':[10,20,50],'two':[60,70,90]})
+    print(df)
+    print(df.replace({50:5000, 90:9000}))
 
 if __name__ == '__main__':
     # demo_isnull_notnull_calculator()
     # demo_all_nan()
     # demo_fillna()
-    demo_pad_fill_back_fill()
+    # demo_pad_fill_back_fill_dropna()
+    demo_replace()
