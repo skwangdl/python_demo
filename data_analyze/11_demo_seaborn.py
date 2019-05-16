@@ -34,7 +34,17 @@ def demo_dif_color_bar():
     plt.xlabel('X axis')
     plt.show()
 
+# 判断a数组元素在bins区间间隔内的频率，输出频率数组
+def demo_numpy_histogram():
+    a = np.array([1,2,3,14,15,16,27,38,39])
+    hist, bins = np.histogram(a,bins=[0,10,20,30,40])
+    plt.hist(a, bins=bins)
+    print(hist)
+    print(bins)
+    plt.show()
+
 if __name__ == '__main__':
     # demo_matplotlib()
     # demo_matplotlib_zh()
-    demo_dif_color_bar()
+    # demo_dif_color_bar()
+    demo_numpy_histogram()
