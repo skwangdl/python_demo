@@ -26,6 +26,7 @@ def demo_make_model():
     # 测试集合
     X_test = dataset[500:, 0:8]
     Y_test = dataset[500:, 8]
+
     print('\n调用scikit的tree.DecisionTreeClassifier()')
     model = tree.DecisionTreeClassifier(min_samples_leaf=2)
     start_time = time.time()
