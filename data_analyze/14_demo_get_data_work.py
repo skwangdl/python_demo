@@ -35,7 +35,7 @@ def demo_make_model():
     # 添加训练数据，生成model预测模型，构建X与Y的映射关系
     model.fit(X_train, Y_train)
     print('training took %fs!' % (time.time() -  start_time))
-    # 将预测模型持久化为文件,模型为决策树
+    # 将预测模型持久化为文件,模型为决策树，joblib作用为保存和还原模型
     joblib.dump(value=model, filename='data/Decisiontree.model')
     # 通过model预测，期望得到的值
     expected = Y_test
